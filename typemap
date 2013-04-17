@@ -1,5 +1,8 @@
 TYPEMAP
 struct hyperclient*		O_OBJECT
+struct hyperclient_transaction*  O_OBJECT;
+struct hyperclient_attribute*	O_OBJECT;
+struct hyperclient_attribute_check* O_OBJECT;
 uint16_t		T_UV
 
 OUTPUT
