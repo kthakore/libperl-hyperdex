@@ -1,5 +1,6 @@
 TYPEMAP
-hyperclient*		O_OBJECT
+struct hyperclient*		O_OBJECT
+uint16_t		T_UV
 
 OUTPUT
 
@@ -8,14 +9,10 @@ O_OBJECT_NPGC
 
 O_OBJECT
     if ($var) {
-        Uint32 *threadid;
         void** pointers;
-        pointers    = malloc(3 * sizeof(void*));
+        pointers    = malloc(2 * sizeof(void*));
         pointers[0] = (void*)$var;
         pointers[1] = (void*)PERL_GET_CONTEXT;
-        threadid    = (Uint32 *)safemalloc(sizeof(Uint32));
-        *threadid   = SDL_ThreadID();
-        pointers[2] = (void*)threadid;
         sv_setref_pv( $arg, CLASS, (void*)pointers ); 
     } else {
         XSRETURN_UNDEF;
