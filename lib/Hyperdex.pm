@@ -4,8 +4,8 @@ use warnings;
 
 use vars qw(@ISA $VERSION @EXPORT @EXPORT_OK);
 require Exporter;
-require Dynaloader;
-our @ISA = qw(Exporter Dynaloader);
+require DynaLoader;
+our @ISA = qw(Exporter DynaLoader);
 
 our $VERSION = '0.01';
 
