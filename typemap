@@ -1,0 +1,37 @@
+TYPEMAP
+hyperclient*		O_OBJECT
+
+OUTPUT
+
+O_OBJECT_NPGC
+    sv_setref_pv( $arg, CLASS, (void*)$var );
+
+O_OBJECT
+    if ($var) {
+        Uint32 *threadid;
+        void** pointers;
+        pointers    = malloc(3 * sizeof(void*));
+        pointers[0] = (void*)$var;
+        pointers[1] = (void*)PERL_GET_CONTEXT;
+        threadid    = (Uint32 *)safemalloc(sizeof(Uint32));
+        *threadid   = SDL_ThreadID();
+        pointers[2] = (void*)threadid;
+        sv_setref_pv( $arg, CLASS, (void*)pointers ); 
+    } else {
+        XSRETURN_UNDEF;
+    }
+
+INPUT
+
+O_OBJECT_NPGC
+    $var = INT2PTR($type, SvIV((SV *)SvRV( $arg )));
+
+O_OBJECT
+    if( sv_isobject($arg) && (SvTYPE(SvRV($arg)) == SVt_PVMG) ) {
+        void** pointers = (void**)INT2PTR(void *, SvIV((SV *)SvRV( $arg )));
+        $var = ($type)(pointers[0]);
+    } else if ($arg == 0) {
+        XSRETURN(0);
+    } else {
+        XSRETURN_UNDEF;
+    }

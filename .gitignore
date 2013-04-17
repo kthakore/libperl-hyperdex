@@ -1,0 +1,7 @@
+blib
+_build
+Build
+*.swp
+*.swo
+*.bak
+
