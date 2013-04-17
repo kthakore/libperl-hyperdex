@@ -11,7 +11,7 @@
 #endif
 
 
-void objDESTROY(SV *bag, void (* callback)(void *object))
+void objDESTROY(SV *bag, void (* callback)(struct hyperclient*object))
 {
     if( sv_isobject(bag) && (SvTYPE(SvRV(bag)) == SVt_PVMG) )
     {
@@ -33,13 +33,12 @@ void objDESTROY(SV *bag, void (* callback)(void *object))
 MODULE = Hyperclient PACKAGE = Hyperclient   PREFIX = hc_
 
 struct hyperclient* 
-hc_new ( coordinator, port )
+hc_new ( CLASS, coordinator, port )
+	const char* CLASS
 	const char* coordinator
 	uint16_t port
-	PREINIT:
-		const char* CLASS="Hyperclient";
 	CODE:
-		struct hyperclient* hc = hyperclient_client( coordinator, port );
+		struct hyperclient* hc = hyperclient_create( coordinator, port );
 		RETVAL = hc;
 	OUTPUT:
 		RETVAL
