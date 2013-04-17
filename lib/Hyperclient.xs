@@ -44,6 +44,25 @@ hc_new ( CLASS, coordinator, port )
 		RETVAL
 
 
+int
+hc_add_space( hc, description )
+	struct hyperclient* hc
+	const char* description
+	CODE:
+		RETVAL=hyperclient_add_space(hc, description);
+	OUTPUT:
+		RETVAL
+
+int
+hc_rm_space( hc, space )
+	struct hyperclient* hc
+	const char* space
+	CODE:
+		RETVAL=hyperclient_rm_space(hc, space);
+	OUTPUT:
+		RETVAL
+
+
 void
 hc_DESTROY ( bag )
 	SV* bag
